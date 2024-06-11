@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1 -p 3005",
-    "start": "nodemon index.js -p 3001"
-  },
+    "start": "node app.js"
+   },
   "author": "",
   "license": "ISC",
   "dependencies": {
