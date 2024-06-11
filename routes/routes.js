@@ -1,4 +1,6 @@
 const express = require('express');
+const { config } = require('dotenv');
+const OpenAI = require('openai');
 const Model = require('../models/model');
 
 const router = express.Router()
@@ -72,5 +74,22 @@ router.delete('/delete/:id', async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
+
+config();
+
+router.post('/openai', async (req, res) => {
+    
+    const openai = new OpenAI(process.env.OPENAI_API_KEY);
+    const prompt = req.body.prompt;
+    try {
+        const completion = await openai.chat.completions.create({
+            messages: [{ role: "system", content: prompt }],
+            model: "gpt-3.5-turbo",
+        });
+        res.json(completion.choices[0]);
+    } catch (error) {
+        res.status(500).json({ error: error.toString() });
+    }
+  });
 
 
